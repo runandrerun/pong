@@ -1,19 +1,27 @@
 class Pong {
   constructor(canvas) {
     this._canvas = canvas;
-    this._canvas = canvas.getContext('2d');
+    this._context = canvas.getContext('2d');
+
+    // instantiate ball
+    this.ball = new Ball;
+    this.ball.pos.x = 100;
+    this.ball.pos.y = 50;
+
+    this.ball.velocity.x = 100;
+    this.ball.velocity.y = 100;
   }
 
-  update = (time) => {
+  update(time) {
     ball.pos.x += ball.velocity.x * time;
     ball.pos.y += ball.velocity.y * time
 
     // table constraints
-    if (ball.left< 0 || ball.right > canvas.width) {
+    if (ball.left< 0 || ball.right > this._canvas.width) {
       ball.velocity.x = -ball.velocity.x
     }
 
-    if (ball.top < 0 || ball.bottom > canvas.height) {
+    if (ball.top < 0 || ball.bottom > this._canvas.height) {
       ball.velocity.y = -ball.velocity.y
     }
 
@@ -23,7 +31,7 @@ class Pong {
 
     // table
     context.fillStyle = '#ccc';
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillRect(0, 0, this._canvas.width, this._canvas.height);
   }
 }
 
@@ -31,14 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const canvas = document.getElementById('pong');
   const context = canvas.getContext('2d');
-
-  // instantiate ball
-  const ball = new Ball;
-  ball.pos.x = 100;
-  ball.pos.y = 50;
-
-  ball.velocity.x = 100;
-  ball.velocity.y = 100;
 
   let last;
 
