@@ -8,11 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let last;
 
-  callBack = (ms) => {
-
+  // ball animation
+  ballMovement = (ms) => {
+    if (last) {
+      update((ms - last) / 1000);
+    }
+    last = ms
+    requestAnimationFrame(ballMovement)
   }
 
-  // movement
+  // ball positioning
   update = (time) => {
     ball.pos.x += ball.value.x * time;
     ball.pos.y += ball.value.y * time
