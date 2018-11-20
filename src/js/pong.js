@@ -10,4 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ball
   context.fillStyle = '#000';
   context.fillRect(0, 0, 10, 10);
+
+  const ball = new Ball;
+  console.log(ball)
 });
