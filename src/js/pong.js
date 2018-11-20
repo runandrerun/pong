@@ -8,9 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   // ball
-  context.fillStyle = '#000';
-  context.fillRect(0, 0, 10, 10);
-
   const ball = new Ball;
+  
+  context.fillStyle = '#000';
+  context.fillRect(ball.pos.x, ball.pos.y, ball.size.x, ball.size.y);
+
   console.log(ball)
 });
