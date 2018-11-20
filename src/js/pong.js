@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // instantiate ball
   const ball = new Ball;
+  ball.pos.x = 50;
+  ball.pos.y = 10;
+  
+  ball.velocity.x = 100;
+  ball.velocity.y = 100;
 
   let last;
 
@@ -19,8 +24,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ball positioning
   update = (time) => {
-    ball.pos.x += ball.value.x * time;
-    ball.pos.y += ball.value.y * time
+    ball.pos.x += ball.velocity.x * time;
+    ball.pos.y += ball.velocity.y * time
+
+    // table constraints
+    if (ball.pos.x < 0 || ball.pos.x > canvas.width) {
+      ball.velocity.x = -ball.velocity.x
+    }
+
+    if (ball.pos.y < 0 || ball.pos.y > canvas.height) {
+      ball.velocity.y = -ball.velocity.y
+    }
 
     // ball
     context.fillStyle = '#000';
@@ -30,5 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     context.fillStyle = '#ccc';
     context.fillRect(0, 0, canvas.width, canvas.height);
   }
+
+  ballMovement()
 
 });
