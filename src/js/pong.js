@@ -59,23 +59,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+
 solution = (S) => {
     let files = S.split('\n');
     let filesLength = files.length;
 
-    let fileList = [];
+    let fileNames = [];
     let uniqueFiles = {};
+
+    let filesList = [];
+
+    let result = [];
 
     for (i = 0; i < filesLength; i++) {
         let separated = files[i].split(',')
 
-        let fileName = separated[1] + '.' + separated[0].split('.')[1] + "\n"
-        fileList.push(separated[1])
-        process.stdout.write(fileName)
+        let fileName = separated[1] + '.' + separated[0].split('.')[1]
+
+        // create unique object per photo
+        let photoObj = {name: fileName, date: separated[separated.length -1]}
+        fileNames.push(separated[1])
+
+        // add object to array
+        filesList.push(photoObj)
     }
 
+    // sort files by date
+    filesList.sort((a, b) => {
+        return parseInt(a['date']) - parseInt(b['date'])
+    })
+
+
     // check for how many times a name appears
-    fileList.forEach(file => {
+    fileNames.forEach(file => {
         if (!uniqueFiles[file]) {
             return uniqueFiles[file] = 1
         } else {
@@ -83,30 +99,36 @@ solution = (S) => {
         }
     })
 
+    console.log(uniqueFiles)
 
-    return Object.keys(uniqueFiles).forEach(location => {
-        if (location.value >= 10) {
-            for (let i = 0; i < location.value; i++) {
-                if (i <= 9) {
-                    // let name = `${location}`
-                    // let file = name + "0" + `${i}` + ".jpg" + "/n"
-                    // return process.stdout.write(file)
-                    // console.log(file)
-                    return process.stdout.write(location)
+    let counter = 0;
+    filesList.forEach((file, index) => {
+        let matcher = file['name'].split('.')[0];
+
+        if (uniqueFiles[matcher]) {
+            console.log(uniqueFiles[matcher])
+            if (uniqueFiles[matcher] >= 10) {
+                if (index + 1 - counter >= 10) {
+                    let edit = file['name'].split('.').join(`${index + 1 - counter}.`);
+                    console.log(edit)
+                    // result.push(edit);
                 } else {
-                    // let name = `${location}`
-                    // let file = name + `${i}` + ".jpg" + "/n"
-                    // return process.stdout.write(file)
-                    return process.stdout.write(location)
+                    let edit = file['name'].split('.').join(`0${index + 1 - counter}.`);
+                    console.log(edit)
+                    // result.push(edit);
                 }
+            } else {
+                let edit = file['name'].split('.').join(`0${index + 1}.`);
+                console.log(edit)
+                // result.push(edit);
             }
         } else {
-            for (let i = 0; i < location.value; i++) {
-                // let name = `${location}`
-                // let file = name + `${i}` + ".jpg" + "/n"
-                return process.stdout.write(location)
-            }
+            console.log("no");
         }
+        counter++
     })
+
+
+    return result
 
 }
