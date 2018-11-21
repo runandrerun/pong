@@ -56,3 +56,57 @@ document.addEventListener('DOMContentLoaded', () => {
   ballMovement()
 
 });
+
+
+
+solution = (S) => {
+    let files = S.split('\n');
+    let filesLength = files.length;
+
+    let fileList = [];
+    let uniqueFiles = {};
+
+    for (i = 0; i < filesLength; i++) {
+        let separated = files[i].split(',')
+
+        let fileName = separated[1] + '.' + separated[0].split('.')[1] + "\n"
+        fileList.push(separated[1])
+        process.stdout.write(fileName)
+    }
+
+    // check for how many times a name appears
+    fileList.forEach(file => {
+        if (!uniqueFiles[file]) {
+            return uniqueFiles[file] = 1
+        } else {
+            return uniqueFiles[file]++
+        }
+    })
+
+
+    return Object.keys(uniqueFiles).forEach(location => {
+        if (location.value >= 10) {
+            for (let i = 0; i < location.value; i++) {
+                if (i <= 9) {
+                    // let name = `${location}`
+                    // let file = name + "0" + `${i}` + ".jpg" + "/n"
+                    // return process.stdout.write(file)
+                    // console.log(file)
+                    return process.stdout.write(location)
+                } else {
+                    // let name = `${location}`
+                    // let file = name + `${i}` + ".jpg" + "/n"
+                    // return process.stdout.write(file)
+                    return process.stdout.write(location)
+                }
+            }
+        } else {
+            for (let i = 0; i < location.value; i++) {
+                // let name = `${location}`
+                // let file = name + `${i}` + ".jpg" + "/n"
+                return process.stdout.write(location)
+            }
+        }
+    })
+
+}
