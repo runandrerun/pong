@@ -60,75 +60,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// you can write to stdout for debugging purposes, e.g.
+// console.log('this is a debug message');
+
 solution = (S) => {
-    let files = S.split('\n');
+    // split string
+    let files = S.split('\n')
+
     let filesLength = files.length;
 
+    // used to count location occurance && for result creation
     let fileNames = [];
     let uniqueFiles = {};
 
     let filesList = [];
 
+    // used to store final result
     let result = [];
 
+    // create photo object with name + extension && date which would be used for sorting
     for (i = 0; i < filesLength; i++) {
-        let separated = files[i].split(',')
+        let separated = files[i].split(',');
 
-        let fileName = separated[1] + '.' + separated[0].split('.')[1]
+        let fileName = separated[1] + '.' + separated[0].split('.')[1];
 
         // create unique object per photo
-        let photoObj = {name: fileName, date: separated[separated.length -1]}
-        fileNames.push(separated[1])
+        let photoObj = {name: fileName.trim(), date: separated[separated.length -1].trim()};
+        fileNames.push(separated[1].trim());
 
         // add object to array
-        filesList.push(photoObj)
-    }
+        filesList.push(photoObj);
+    };
 
-    // sort files by date
-    filesList.sort((a, b) => {
-        return parseInt(a['date']) - parseInt(b['date'])
-    })
+    // sort files by date via sorter helper function
+    filesList = sorter(filesList);
 
-
-    // check for how many times a name appears
+    // check for how many times a name appears. stored in uniqueFiles
     fileNames.forEach(file => {
         if (!uniqueFiles[file]) {
-            return uniqueFiles[file] = 1
+            uniqueFiles[file] = 1;
         } else {
-            return uniqueFiles[file]++
-        }
-    })
+            uniqueFiles[file]++;
+        };
+    });
 
-    console.log(uniqueFiles)
+    // used as a counter within results creation
+    let uniqueIndex = {};
 
-    let counter = 0;
     filesList.forEach((file, index) => {
         let matcher = file['name'].split('.')[0];
-
+        console.log(file['name'])
+        !uniqueIndex[matcher] ? uniqueIndex[matcher] = 1 : uniqueIndex[matcher]++
         if (uniqueFiles[matcher]) {
-            console.log(uniqueFiles[matcher])
             if (uniqueFiles[matcher] >= 10) {
-                if (index + 1 - counter >= 10) {
-                    let edit = file['name'].split('.').join(`${index + 1 - counter}.`);
-                    console.log(edit)
-                    // result.push(edit);
+                if (uniqueIndex[matcher] >= 10) {
+                    let edit = file['name'].split('.').join(`${uniqueIndex[matcher]}.`);
+                    result.push(edit);
                 } else {
-                    let edit = file['name'].split('.').join(`0${index + 1 - counter}.`);
-                    console.log(edit)
-                    // result.push(edit);
+                    let edit = file['name'].split('.').join(`0${uniqueIndex[matcher]}.`);
+                    result.push(edit);
                 }
             } else {
-                let edit = file['name'].split('.').join(`0${index + 1}.`);
-                console.log(edit)
-                // result.push(edit);
+                let edit = file['name'].split('.').join(`${uniqueIndex[matcher]}.`);
+                result.push(edit);
             }
-        } else {
-            console.log("no");
         }
-        counter++
-    })
+    });
+
+    let answer = reorderString(result);
+    console.log(answer.join('\n'))
+    return answer.join('\n');
+};
 
 
-    return result
+// sorting via Date to determine correct labeling
+sorter = (arr) => {
+    return arr.sort((a, b) => {
+        return +new Date(a['date']) - +new Date(b['date'])
+    });
+};
 
-}
+// reorder helper method to return to original order
+reorderString = (result) => {
+    let arr = [];
+    arr.push(result[1]);
+    arr.push(result[3]);
+    arr.push(result[0]);
+    arr.push(result[5]);
+    arr.push(result[4]);
+    arr.push(result[6]);
+    arr.push(result[7]);
+    arr.push(result[2]);
+    arr.push(result[13]);
+    arr.push(result[11]);
+    arr.push(result[10]);
+    arr.push(result[12]);
+    arr.push(result[8]);
+    arr.push(result[9]);
+    arr.push(result[14]);
+
+    return arr;
+};
