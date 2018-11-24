@@ -132,6 +132,7 @@ solution = (S) => {
     return answer.join('\n');
 };
 
+// Testing
 
 // sorting via Date to determine correct labeling
 sorter = (arr) => {
