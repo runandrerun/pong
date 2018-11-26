@@ -14,15 +14,27 @@ class Pong {
     // ball animation
     let last;
 
-    const ballMovement = (ms) => {
+    const ballMovement = (millis) => {
       if (last) {
-        this.update((ms - last) / 1000);
+        this.update((millis - last) / 1000);
       }
-      last = ms
+      last = millis
       requestAnimationFrame(ballMovement)
     };
 
     ballMovement();
+  };
+
+  drawShapes(shape) {
+    this._context.fillStyle = '#000';
+    this._context.fillRect(shape.pos.x, shape.pos.y, shape.size.x, shape.size.y);
+  };
+
+  draw() {
+    // table
+    this._context.fillStyle = '#fff';
+    this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this.drawShapes(this.ball);
   };
 
   update(time) {
@@ -38,13 +50,7 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     };
 
-    // ball
-    this._context.fillStyle = '#000';
-    this._context.fillRect(this.ball.pos.x, this.ball.pos.y, this.ball.size.x, this.ball.size.y);
-
-    // table
-    this._context.fillStyle = '#ccc';
-    this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+    this.draw();
   };
 };
 
