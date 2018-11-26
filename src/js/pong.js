@@ -10,51 +10,47 @@ class Pong {
 
     this.ball.velocity.x = 100;
     this.ball.velocity.y = 100;
-  }
+
+    // ball animation
+    let last;
+
+    const ballMovement = (ms) => {
+      if (last) {
+        this.update((ms - last) / 1000);
+      }
+      last = ms
+      requestAnimationFrame(ballMovement)
+    };
+
+    ballMovement();
+  };
 
   update(time) {
     this.ball.pos.x += this.ball.velocity.x * time;
-    this.ball.pos.y += this.ball.velocity.y * time
+    this.ball.pos.y += this.ball.velocity.y * time;
 
     // table constraints
     if (this.ball.left< 0 || this.ball.right > this._canvas.width) {
-      this.ball.velocity.x = -this.ball.velocity.x
-    }
+      this.ball.velocity.x = -this.ball.velocity.x;
+    };
 
     if (this.ball.top < 0 || this.ball.bottom > this._canvas.height) {
-      this.ball.velocity.y = -this.ball.velocity.y
-    }
+      this.ball.velocity.y = -this.ball.velocity.y;
+    };
 
     // ball
-    context.fillStyle = '#000';
-    context.fillRect(this.ball.pos.x, this.ball.pos.y, this.ball.size.x, this.ball.size.y);
+    this._context.fillStyle = '#000';
+    this._context.fillRect(this.ball.pos.x, this.ball.pos.y, this.ball.size.x, this.ball.size.y);
 
     // table
-    context.fillStyle = '#ccc';
-    context.fillRect(0, 0, this._canvas.width, this._canvas.height);
-  }
-}
+    this._context.fillStyle = '#ccc';
+    this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
+  };
+};
 
 document.addEventListener('DOMContentLoaded', () => {
-
   const canvas = document.getElementById('pong');
-  const context = canvas.getContext('2d');
-
-  let last;
-
-  // ball animation
-  ballMovement = (ms) => {
-    if (last) {
-      update((ms - last) / 1000);
-    }
-    last = ms
-    requestAnimationFrame(ballMovement)
-  }
-
-  // ball positioning
-
-  ballMovement()
-
+  const pong = new Pong(canvas)
 });
 
 
