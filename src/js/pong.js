@@ -123,9 +123,9 @@ class Pong {
       // setInterval(function() {this.players[1].pos.y = this.ball.pos.y - 50}, 4000);
       this.players[1].pos.y = this.ball.pos.y;
     } else if (this.ball.pos.x < this._canvas.width / 2 && this.ball.pos.y < this._canvas.height / 2){
-      // this.players[1].pos.y = this.ball.pos.y - 100;
+      // this.players[1].pos.y = this.ball.pos.y;
     } else {
-      // this.players[1].pos.y = this.ball.pos.y - 50;
+      // this.players[1].pos.y = this.ball.pos.y;
     };
   };
 
