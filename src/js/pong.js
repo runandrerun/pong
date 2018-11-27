@@ -11,6 +11,14 @@ class Pong {
     this.ball.velocity.x = 100;
     this.ball.velocity.y = 100;
 
+    // players
+    this.players = [ new Player, new Player ];
+    this.players[0].pos.x = 40;
+    this.players[1].pos.x = this._canvas.width - 40;
+    this.players.forEach(player => {
+      player.pos.y = this._canvas.height / 2;
+    })
+
     // ball animation
     let last;
 
@@ -18,8 +26,8 @@ class Pong {
       if (last) {
         this.update((millis - last) / 1000);
       }
-      last = millis
-      requestAnimationFrame(ballMovement)
+      last = millis;
+      requestAnimationFrame(ballMovement);
     };
 
     ballMovement();
@@ -27,7 +35,7 @@ class Pong {
 
   drawShapes(shape) {
     this._context.fillStyle = '#000';
-    this._context.fillRect(shape.pos.x, shape.pos.y, shape.size.x, shape.size.y);
+    this._context.fillRect(shape.left, shape.top, shape.size.x, shape.size.y);
   };
 
   draw() {
@@ -35,7 +43,14 @@ class Pong {
     this._context.fillStyle = '#fff';
     this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this.drawShapes(this.ball);
+    this.createPlayers();
   };
+
+  createPlayers() {
+    this.players.forEach(player => {
+      this.drawShapes(player);
+    })
+  }
 
   update(time) {
     this.ball.pos.x += this.ball.velocity.x * time;
@@ -50,14 +65,10 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     };
 
+    this.players[1].pos.y = this.ball.pos.y;
     this.draw();
   };
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-  const canvas = document.getElementById('pong');
-  const pong = new Pong(canvas)
-});
 
 
 
