@@ -120,10 +120,13 @@ class Pong {
   computer() {
     if (this.ball.pos.x > this._canvas.width / 2 && this.ball.pos.y > this._canvas.height / 2) {
       // this.players[1].pos.y = this.ball.pos.y - (Math.random() * 100 - 1 ? 1 : -1);
-        this.players[1].pos.y = this.ball.pos.y - 20;
-    }
-      this.players[1].pos.y = this.ball.pos.y - 50;
-
+      // setInterval(function() {this.players[1].pos.y = this.ball.pos.y - 50}, 4000);
+      this.players[1].pos.y = this.ball.pos.y;
+    } else if (this.ball.pos.x < this._canvas.width / 2 && this.ball.pos.y < this._canvas.height / 2){
+      // this.players[1].pos.y = this.ball.pos.y - 100;
+    } else {
+      // this.players[1].pos.y = this.ball.pos.y - 50;
+    };
   };
 
   update(time) {
