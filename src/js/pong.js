@@ -134,7 +134,7 @@ class Pong {
     this.ball.pos.y += this.ball.velocity.y * time;
 
     // table constraints
-    if (this.ball.left< 0 || this.ball.right > this._canvas.width) {
+    if (this.ball.left < 0 || this.ball.right > this._canvas.width) {
       let playerId;
       if (this.ball.velocity.x < 0) {
         playerId = 1;
