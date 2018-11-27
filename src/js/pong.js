@@ -138,7 +138,7 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     };
 
-    this.players[1].pos.y = this.ball.pos.y - 10;
+    this.players[1].pos.y = this.ball.pos.y - (Math.random() * 2 - 1 ? 1 : -1);
     // this.players[1].velocity =
     this.players.forEach(player => {
       this.collision(player, this.ball);
