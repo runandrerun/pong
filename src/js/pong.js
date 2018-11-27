@@ -66,7 +66,7 @@ class Pong {
         const length = ball.velocity.length;
         ball.velocity.x = -ball.velocity.x;
         ball.velocity.y = 300 * (Math.random() - .5);
-        ball.velocity.length = length * 1.10;
+        ball.velocity.length = length * 1.15;
     }
   };
 
@@ -117,6 +117,13 @@ class Pong {
     });
   };
 
+  computer() {
+    if (this.ball.pos.x > this._canvas.width / 3 && this.ball.pos.y > this._canvas.height / 3) {
+      // this.players[1].pos.y = this.ball.pos.y - (Math.random() * 100 - 1 ? 1 : -1);
+        this.players[1].pos.y = this.ball.pos.y - 20;
+    }
+  };
+
   update(time) {
     this.ball.pos.x += this.ball.velocity.x * time;
     this.ball.pos.y += this.ball.velocity.y * time;
@@ -138,8 +145,8 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     };
 
-    this.players[1].pos.y = this.ball.pos.y - (Math.random() * 2 - 1 ? 1 : -1);
-    // this.players[1].velocity =
+    this.computer();
+
     this.players.forEach(player => {
       this.collision(player, this.ball);
     })
