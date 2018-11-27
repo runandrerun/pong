@@ -79,9 +79,9 @@ class Pong {
 
   serve() {
     if (this.ball.velocity.x === 0 && this.ball.velocity.y === 0) {
-      this.ball.velocity.x = 200 * (Math.random() > .5 ? 1 : -1);
-      this.ball.velocity.y = 200 * (Math.random() * 2 - 1 ? 1 : -1);
-      this.ball.velocity.length = 200;
+      this.ball.velocity.x = 300 * (Math.random() > .5 ? 1 : -1);
+      this.ball.velocity.y = 300 * (Math.random() * 2 - 1 ? 1 : -1);
+      this.ball.velocity.length = 300;
     }
   }
 
@@ -139,6 +139,7 @@ class Pong {
     };
 
     this.players[1].pos.y = this.ball.pos.y - 10;
+    // this.players[1].velocity =
     this.players.forEach(player => {
       this.collision(player, this.ball);
     })
