@@ -4,5 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   canvas.addEventListener('mousemove', (e) => {
     pong.players[0].pos.y = e.offsetY;
-  })
+  });
+
+  canvas.addEventListener('click', (e) => {
+    pong.serve();
+  });
 });

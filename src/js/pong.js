@@ -31,7 +31,59 @@ class Pong {
     };
 
     ballMovement();
+
+    this.DIGIT_PX = 10;
+    this.DIGITS = [
+      "111101101101111",
+      "010010010010010",
+      "111001111100111",
+      "111001111001111",
+      "101101111001001",
+      "111100111001111",
+      "111100111101111",
+      "111001001001001",
+      "111101111101111",
+      "111101111001111",
+    ].map(digit => {
+      const canvas = document.createElement('canvas');
+      canvas.height = this.DIGIT_PX * 5;
+      canvas.width = this.DIGIT_PX * 3;
+      const context = canvas.getContext('2d');
+      context.fillStyle = '#000';
+      digit.split('').forEach((draw, i) => {
+        if (draw === '1') {
+          context.fillRect((i % 3) * this.DIGIT_PX, (i / 3 | 0) * this.DIGIT_PX, this.DIGIT_PX, this.DIGIT_PX);
+        }
+      });
+      return canvas;
+    });
+
   };
+
+  collision(player, ball) {
+    if (player.left < ball.right && player.right > ball.left &&
+        player.top < ball.bottom && player.bottom > ball.top) {
+        const length = ball.velocity.length;
+        ball.velocity.x = -ball.velocity.x;
+        ball.velocity.y = 300 * (Math.random() - .5);
+        ball.velocity.length = length * 1.10;
+    }
+  };
+
+  reset() {
+    this.ball.pos.x = this._canvas.width / 2;
+    this.ball.pos.y = this._canvas.height / 2;
+    this.ball.velocity.x = 0;
+    this.ball.velocity.y = 0;
+  }
+
+  serve() {
+    if (this.ball.velocity.x === 0 && this.ball.velocity.y === 0) {
+      this.ball.velocity.x = 200 * (Math.random() > .5 ? 1 : -1);
+      this.ball.velocity.y = 200 * (Math.random() * 2 - 1 ? 1 : -1);
+      this.ball.velocity.length = 200;
+    }
+  }
 
   drawShapes(shape) {
     this._context.fillStyle = '#000';
@@ -46,11 +98,23 @@ class Pong {
     this.createPlayers();
   };
 
+  displayScore() {
+    const position = this._canvas.width / 3;
+    const scoreWidth = this.DIGIT_PX * 4;
+    this.players.forEach((player, i)=> {
+      const scores = player.score.toString().split('');
+      const alignment = position * (i + 1) - (scoreWidth * scores.length / 2) * this.DIGIT_PX / 2;
+      scores.forEach((score, pos) => {
+        this._context.drawShapes(this.DIGITS[score | 0], alignment + pos * scoreWidth);
+      });
+    });
+  };
+
   createPlayers() {
     this.players.forEach(player => {
       this.drawShapes(player);
-    })
-  }
+    });
+  };
 
   update(time) {
     this.ball.pos.x += this.ball.velocity.x * time;
@@ -58,7 +122,15 @@ class Pong {
 
     // table constraints
     if (this.ball.left< 0 || this.ball.right > this._canvas.width) {
+      let playerId;
+      if (this.ball.velocity.x < 0) {
+        playerId = 1;
+      } else {
+        playerId = 0;
+      }
+      this.players[playerId].score++;
       this.ball.velocity.x = -this.ball.velocity.x;
+      this.reset();
     };
 
     if (this.ball.top < 0 || this.ball.bottom > this._canvas.height) {
@@ -66,6 +138,9 @@ class Pong {
     };
 
     this.players[1].pos.y = this.ball.pos.y;
+    this.players.forEach(player => {
+      this.collision(player, this.ball);
+    })
     this.draw();
   };
 };
