@@ -8,8 +8,8 @@ class Pong {
     this.ball.pos.x = 100;
     this.ball.pos.y = 50;
 
-    this.ball.velocity.x = 100;
-    this.ball.velocity.y = 100;
+    this.ball.velocity.x = 300;
+    this.ball.velocity.y = 300;
 
     // players
     this.players = [ new Player, new Player ];
@@ -79,8 +79,8 @@ class Pong {
 
   serve() {
     if (this.ball.velocity.x === 0 && this.ball.velocity.y === 0) {
-      this.ball.velocity.x = 350 * (Math.random() > .5 ? 1 : -1);
-      this.ball.velocity.y = 350 * (Math.random() * 2 - 1 ? 1 : -1);
+      this.ball.velocity.x = 300 * (Math.random() > .5 ? 1 : -1);
+      this.ball.velocity.y = 300 * (Math.random() * 2 - 1 ? 1 : -1);
       this.ball.velocity.length = 350;
     }
   }
@@ -122,6 +122,7 @@ class Pong {
       // this.players[1].pos.y = this.ball.pos.y - (Math.random() * 100 - 1 ? 1 : -1);
         this.players[1].pos.y = this.ball.pos.y - 20;
     }
+    this.players[1].pos.y = this.ball.pos.y - 90;
   };
 
   update(time) {
