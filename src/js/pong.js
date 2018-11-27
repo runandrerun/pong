@@ -96,6 +96,7 @@ class Pong {
     this._context.fillRect(0, 0, this._canvas.width, this._canvas.height);
     this.drawShapes(this.ball);
     this.createPlayers();
+    this.displayScore();
   };
 
   displayScore() {
@@ -103,9 +104,9 @@ class Pong {
     const scoreWidth = this.DIGIT_PX * 4;
     this.players.forEach((player, i)=> {
       const scores = player.score.toString().split('');
-      const alignment = position * (i + 1) - (scoreWidth * scores.length / 2) * this.DIGIT_PX / 2;
+      const alignment = position * (i + 1) - (scoreWidth * scores.length / 2) + this.DIGIT_PX / 2;
       scores.forEach((score, pos) => {
-        this._context.drawShapes(this.DIGITS[score | 0], alignment + pos * scoreWidth);
+        this._context.drawImage(this.DIGITS[score|0], alignment + pos * scoreWidth, 20);
       });
     });
   };
@@ -137,7 +138,7 @@ class Pong {
       this.ball.velocity.y = -this.ball.velocity.y;
     };
 
-    this.players[1].pos.y = this.ball.pos.y;
+    this.players[1].pos.y = this.ball.pos.y - 10;
     this.players.forEach(player => {
       this.collision(player, this.ball);
     })

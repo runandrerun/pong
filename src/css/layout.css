@@ -1,4 +1,6 @@
 body {
+  display: flex;
+  align-items: center;
   background: #eee;
   color: #000;
   font-family: sans-serif;
@@ -13,4 +15,6 @@ body {
   -webkit-box-shadow: 1px 1px 1.5px 2px #ccc;
   -moz-box-shadow:    1px 1px 1.5px 2px #ccc;
   box-shadow:         1px 1px 1.5px 2px #ccc;
+  image-rendering: pixelated;
+  margin: 0 auto;
 }

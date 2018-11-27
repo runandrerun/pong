@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const pong = new Pong(canvas)
 
   canvas.addEventListener('mousemove', (e) => {
-    pong.players[0].pos.y = e.offsetY;
+    const realtime = e.offsetY / e.target.getBoundingClientRect().height;
+    pong.players[0].pos.y = canvas.height * realtime;
   });
 
   canvas.addEventListener('click', (e) => {
